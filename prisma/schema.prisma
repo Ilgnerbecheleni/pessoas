@@ -13,10 +13,24 @@ datasource db {
 
 model User {
   
-  id        String   @id @default(cuid())
+  id        Int   @id @default(autoincrement())
   nome      String   
   telefone String 
   cracha String @unique
   ativo Boolean @default(true)
+  status Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  acesso Acesso[]
+}
 
+model Acesso{
+  id            Int     @id @default(autoincrement())
+  datahora      DateTime @default(now())
+  userId    Int
+  tipo String 
+  cracha String
+  entrada Boolean
+  saida Boolean
+  user User  @relation(fields: [userId], references: [id])
 }
